@@ -32,23 +32,20 @@ public struct FastLightEngine: Equatable, Sendable {
     /// Returns the fasting status at a specific date and timezone.
     /// - Parameters:
     ///   - date: The date to evaluate.
-    ///   - timeZone: The timezone to use for hour calculation.
+    ///   - timeZone: The timezone to use for calculation.
     /// - Returns: `.fasting` or `.eating`.
     public func status(at date: Date, timeZone: TimeZone = .current) -> WindowStatus {
         schedule.state(at: date, timeZone: timeZone)
     }
 
-    // MARK: - Time Remaining
+    // MARK: - Remaining Time
 
     /// Returns the time remaining in the current window (fasting or eating).
     /// - Parameter timeZone: The user's timezone.
-    /// - Returns: The duration until the next transition, or nil if it can't be determined.
-    public func timeRemainingInCurrentWindow(timeZone: TimeZone = .current) -> TimeInterval? {
+    /// - Returns: The duration until the next transition.
+    public func timeRemainingInCurrentWindow(timeZone: TimeZone = .current) -> TimeInterval {
         let now = Date()
-        let status = currentStatus(timeZone: timeZone)
-        guard let nextTransition = nextTransition(after: now, timeZone: timeZone) else {
-            return nil
-        }
+        let nextTransition = schedule.nextTransitionDate(after: now, timeZone: timeZone)
         return nextTransition.timeIntervalSince(now)
     }
 
@@ -57,40 +54,24 @@ public struct FastLightEngine: Equatable, Sendable {
     ///   - date: The date to start from.
     ///   - timeZone: The timezone to use.
     /// - Returns: The date of the next transition.
-    public func nextTransition(after date: Date = Date(), timeZone: TimeZone = .current) -> Date? {
-        var calendar = Calendar.current
-        calendar.timeZone = timeZone
+    public func nextTransition(after date: Date = Date(), timeZone: TimeZone = .current) -> Date {
+        schedule.nextTransitionDate(after: date, timeZone: timeZone)
+    }
 
-        let currentStatus = status(at: date, timeZone: timeZone)
-        let currentHour = calendar.component(.hour, from: date)
-        let currentMinute = calendar.component(.minute, from: date)
+    /// A human-readable string of remaining time until the next state change.
+    /// - Parameter timeZone: The user's timezone.
+    /// - Returns: A string like "2h 15m until eating" or "45m until fasting".
+    public func timeRemainingString(timeZone: TimeZone = .current) -> String {
+        schedule.timeRemainingString(at: Date(), timeZone: timeZone)
+    }
 
-        // Determine the next transition hour
-        let transitionHour: Int
-        if currentStatus == .fasting {
-            // We're fasting — next transition is the start of the eating window
-            transitionHour = schedule.eatingWindowStartHour
-        } else {
-            // We're eating — next transition is the end of the eating window
-            transitionHour = schedule.eatingWindowEndHour
-        }
-
-        // Build a candidate date for today at the transition hour
-        var components = calendar.dateComponents([.year, .month, .day], from: date)
-        components.hour = transitionHour
-        components.minute = 0
-        components.second = 0
-
-        guard var transitionDate = calendar.date(from: components) else {
-            return nil
-        }
-
-        // If the transition has already passed today, move to tomorrow
-        if transitionDate <= date {
-            transitionDate = calendar.date(byAdding: .day, value: 1, to: transitionDate)!
-        }
-
-        return transitionDate
+    /// The precise time when the widget should next refresh (1 minute before each transition).
+    /// - Parameters:
+    ///   - date: The reference date (default: now).
+    ///   - timeZone: The timezone to use.
+    /// - Returns: A date shortly before the next state change.
+    public func nextRefreshDate(after date: Date = Date(), timeZone: TimeZone = .current) -> Date {
+        schedule.nextRefreshDate(after: date, timeZone: timeZone)
     }
 
     // MARK: - State Description
@@ -115,19 +96,17 @@ public struct FastLightEngine: Equatable, Sendable {
         let status = currentStatus(timeZone: timeZone)
         let baseDescription = statusDescription(timeZone: timeZone)
 
-        if let remaining = timeRemainingInCurrentWindow(timeZone: timeZone) {
-            let hours = Int(remaining) / 3600
-            let minutes = (Int(remaining) % 3600) / 60
-            let timeString: String
-            if hours > 0 {
-                timeString = "\(h)h \(minutes)m remaining"
-            } else {
-                timeString = "\(minutes)m remaining"
-            }
-            return "\(baseDescription) · \(timeString)"
+        let remaining = timeRemainingInCurrentWindow(timeZone: timeZone)
+        let totalMinutes = Int(remaining) / 60
+        let hours = totalMinutes / 60
+        let minutes = totalMinutes % 60
+        let timeString: String
+        if hours > 0 {
+            timeString = "\(hours)h \(minutes)m remaining"
+        } else {
+            timeString = "\(minutes)m remaining"
         }
-
-        return baseDescription
+        return "\(baseDescription) · \(timeString)"
     }
 }
 

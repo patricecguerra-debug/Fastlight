@@ -16,6 +16,8 @@
         000000000000000000013002 /* WindowStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000003003 /* WindowStatus.swift */; };
         000000000000000000013003 /* FastingSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000003004 /* FastingSchedule.swift */; };
         000000000000000000013004 /* FastLightEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000003005 /* FastLightEngine.swift */; };
+        000000000000000000013005 /* FastingSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000003006 /* FastingSettingsStore.swift */; };
+        000000000000000000013006 /* FastingSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000003007 /* FastingSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
         000000000000000000003003 /* WindowStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowStatus.swift; sourceTree = "<group>"; };
         000000000000000000003004 /* FastingSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastingSchedule.swift; sourceTree = "<group>"; };
         000000000000000000003005 /* FastLightEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastLightEngine.swift; sourceTree = "<group>"; };
+        000000000000000000003006 /* FastingSettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastingSettingsStore.swift; sourceTree = "<group>"; };
+        000000000000000000003007 /* FastingSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastingSettings.swift; sourceTree = "<group>"; };
         000000000000000000004001 /* FastLight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FastLight.app; sourceTree = BUILT_PRODUCTS_DIR; };
         000000000000000000004002 /* FastLightWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FastLightWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
         000000000000000000004003 /* FastLightKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FastLightKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +130,8 @@
                 000000000000000000003003 /* WindowStatus.swift */,
                 000000000000000000003004 /* FastingSchedule.swift */,
                 000000000000000000003005 /* FastLightEngine.swift */,
+                000000000000000000003006 /* FastingSettingsStore.swift */,
+                000000000000000000003007 /* FastingSettings.swift */,
                 000000000000000000003002 /* Info.plist */,
             );
             path = FastLightKit;
@@ -272,6 +278,8 @@
                 000000000000000000013002 /* WindowStatus.swift in Sources */,
                 000000000000000000013003 /* FastingSchedule.swift in Sources */,
                 000000000000000000013004 /* FastLightEngine.swift in Sources */,
+                000000000000000000013005 /* FastingSettingsStore.swift in Sources */,
+                000000000000000000013006 /* FastingSettings.swift in Sources */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };

@@ -5,6 +5,8 @@ struct ContentView: View {
     @State private var selectedPreset: FastingSchedule.Preset = .sixteenEight
     @State private var currentTime = Date()
 
+    private let store = FastingSettingsStore.shared
+
     private var engine: FastLightEngine {
         FastLightEngine(schedule: selectedPreset.schedule)
     }
@@ -41,6 +43,14 @@ struct ContentView: View {
         .padding(.top, 60)
         .onReceive(timer) { time in
             currentTime = time
+        }
+        .onAppear {
+            // Load saved preset from AppGroup storage
+            selectedPreset = store.selectedPreset
+        }
+        .onChange(of: selectedPreset) { _, newPreset in
+            // Save to AppGroup storage so the widget picks it up
+            store.selectedPreset = newPreset
         }
     }
 
@@ -114,12 +124,10 @@ struct ContentView: View {
 
             let schedule = selectedPreset.schedule
             DetailRow(label: "Eating window",
-                      value: "\(schedule.eatingWindowStartHour):00 – \(schedule.eatingWindowEndHour):00")
+                      value: schedule.timeRangeString)
 
-            if let nextTransition = engine.nextTransition() {
-                DetailRow(label: "Next change",
-                          value: nextTransition.formatted(date: .omitted, time: .shortened))
-            }
+            DetailRow(label: "Next change",
+                      value: engine.nextTransition().formatted(date: .omitted, time: .shortened))
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
