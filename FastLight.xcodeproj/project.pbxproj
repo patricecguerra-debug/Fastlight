@@ -12,6 +12,7 @@
         000000000000000000011003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000001003 /* Assets.xcassets */; };
         000000000000000000012001 /* FastLightWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000002001 /* FastLightWidget.swift */; };
         000000000000000000012002 /* FastLightWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000002002 /* FastLightWidgetBundle.swift */; };
+        000000000000000000012003 /* WidgetScheduleIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000002004 /* WidgetScheduleIntent.swift */; };
         000000000000000000013001 /* FastingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000003001 /* FastingState.swift */; };
         000000000000000000013002 /* WindowStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000003003 /* WindowStatus.swift */; };
         000000000000000000013003 /* FastingSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000003004 /* FastingSchedule.swift */; };
@@ -45,6 +46,7 @@
         000000000000000000002001 /* FastLightWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastLightWidget.swift; sourceTree = "<group>"; };
         000000000000000000002002 /* FastLightWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastLightWidgetBundle.swift; sourceTree = "<group>"; };
         000000000000000000002003 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+        000000000000000000002004 /* WidgetScheduleIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetScheduleIntent.swift; sourceTree = "<group>"; };
         000000000000000000003001 /* FastingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastingState.swift; sourceTree = "<group>"; };
         000000000000000000003002 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
         000000000000000000003003 /* WindowStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowStatus.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
             children = (
                 000000000000000000002001 /* FastLightWidget.swift */,
                 000000000000000000002002 /* FastLightWidgetBundle.swift */,
+                000000000000000000002004 /* WidgetScheduleIntent.swift */,
                 000000000000000000002003 /* Info.plist */,
             );
             path = FastLightWidget;
@@ -267,6 +270,7 @@
             files = (
                 000000000000000000012001 /* FastLightWidget.swift in Sources */,
                 000000000000000000012002 /* FastLightWidgetBundle.swift in Sources */,
+                000000000000000000012003 /* WidgetScheduleIntent.swift in Sources */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };

@@ -6,7 +6,11 @@ struct FastLightWidget: Widget {
     let kind: String = "com.fastlight.app.widget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+        AppIntentConfiguration(
+            kind: kind,
+            intent: ScheduleSelectionIntent.self,
+            provider: Provider()
+        ) { entry in
             FastLightWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Fast Status")
@@ -15,37 +19,63 @@ struct FastLightWidget: Widget {
     }
 }
 
-struct Provider: TimelineProvider {
+struct Provider: AppIntentTimelineProvider {
+    // MARK: - Placeholder / Snapshot
+
     func placeholder(in context: Context) -> FastLightEntry {
-        FastLightEntry(date: Date(), status: .fasting, schedule: .fromPreset(.sixteenEight))
+        FastLightEntry(
+            date: Date(),
+            status: .fasting,
+            schedule: FastingSchedule.fromPreset(.sixteenEight),
+            preset: .sixteenEight
+        )
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (FastLightEntry) -> Void) {
-        let entry = FastLightEntry(date: Date(), status: .fasting, schedule: .fromPreset(.sixteenEight))
-        completion(entry)
+    func snapshot(for configuration: ScheduleSelectionIntent, in context: Context) async -> FastLightEntry {
+        let preset = configuration.preset.fastLightPreset
+        let schedule = FastingSchedule.fromPreset(preset)
+        return FastLightEntry(
+            date: Date(),
+            status: .fasting,
+            schedule: schedule,
+            preset: configuration.preset
+        )
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<FastLightEntry>) -> Void) {
+    // MARK: - Timeline
+
+    func timeline(for configuration: ScheduleSelectionIntent, in context: Context) async -> Timeline<FastLightEntry> {
         let now = Date()
-        let store = FastingSettingsStore.shared
-        let schedule = store.selectedPreset.schedule
+        let widgetPreset = configuration.preset
+        let preset = widgetPreset.fastLightPreset
+        let schedule = FastingSchedule.fromPreset(preset)
         let engine = FastLightEngine(schedule: schedule)
         let status = engine.currentStatus()
 
-        let entry = FastLightEntry(date: now, status: status, schedule: schedule)
+        // Persist the user's selection so the app stays in sync
+        FastingSettingsStore.shared.selectedPreset = preset
+
+        let entry = FastLightEntry(
+            date: now,
+            status: status,
+            schedule: schedule,
+            preset: widgetPreset
+        )
 
         // Refresh 1 minute before the next state transition
         let refreshDate = schedule.nextRefreshDate()
 
-        let timeline = Timeline(entries: [entry], policy: .after(refreshDate))
-        completion(timeline)
+        return Timeline(entries: [entry], policy: .after(refreshDate))
     }
 }
+
+// MARK: - Entry
 
 struct FastLightEntry: TimelineEntry {
     let date: Date
     let status: WindowStatus
     let schedule: FastingSchedule
+    let preset: WidgetSchedulePreset
 }
 
 // MARK: - Widget Views
@@ -79,6 +109,10 @@ struct FastLightWidgetEntryView: View {
                 .font(.title3)
                 .fontWeight(.bold)
                 .foregroundStyle(.white)
+
+            Text(entry.schedule.label)
+                .font(.caption2)
+                .foregroundStyle(.white.opacity(0.6))
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .containerBackground(entry.status.isFasting ? Color.green.gradient : Color.red.gradient, for: .widget)
@@ -135,13 +169,13 @@ struct FastLightWidgetEntryView: View {
 #Preview(as: .systemSmall) {
     FastLightWidget()
 } timeline: {
-    FastLightEntry(date: Date(), status: .fasting, schedule: .fromPreset(.sixteenEight))
-    FastLightEntry(date: Date(), status: .eating, schedule: .fromPreset(.sixteenEight))
+    FastLightEntry(date: Date(), status: .fasting, schedule: .fromPreset(.sixteenEight), preset: .sixteenEight)
+    FastLightEntry(date: Date(), status: .eating, schedule: .fromPreset(.sixteenEight), preset: .sixteenEight)
 }
 
 #Preview(as: .systemMedium) {
     FastLightWidget()
 } timeline: {
-    FastLightEntry(date: Date(), status: .fasting, schedule: .fromPreset(.sixteenEight))
-    FastLightEntry(date: Date(), status: .eating, schedule: .fromPreset(.sixteenEight))
+    FastLightEntry(date: Date(), status: .fasting, schedule: .fromPreset(.sixteenEight), preset: .sixteenEight)
+    FastLightEntry(date: Date(), status: .eating, schedule: .fromPreset(.sixteenEight), preset: .sixteenEight)
 }

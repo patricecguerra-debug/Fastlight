@@ -36,6 +36,9 @@ public final class FastingSettingsStore: @unchecked Sendable {
         case "sixteenEight": return .sixteenEight
         case "eighteenSix": return .eighteenSix
         case "twentyFour": return .twentyFour
+        case "fourteenTen": return .fourteenTen
+        case "twelveTwelve": return .twelveTwelve
+        case "custom": return .custom(startHour: 12, endHour: 20)
         default: return .sixteenEight
         }
     }
