@@ -19,6 +19,10 @@
         000000000000000000013004 /* FastLightEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000003005 /* FastLightEngine.swift */; };
         000000000000000000013005 /* FastingSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000003006 /* FastingSettingsStore.swift */; };
         000000000000000000013006 /* FastingSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000003007 /* FastingSettings.swift */; };
+        000000000000000000013007 /* PremiumManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000003008 /* PremiumManager.swift */; };
+        000000000000000000013008 /* StreakTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000003009 /* StreakTracker.swift */; };
+        000000000000000000011004 /* PremiumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000001005 /* PremiumView.swift */; };
+        000000000000000000011005 /* FastLightProducts.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000006 /* FastLightProducts.storekit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,9 +58,13 @@
         000000000000000000003005 /* FastLightEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastLightEngine.swift; sourceTree = "<group>"; };
         000000000000000000003006 /* FastingSettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastingSettingsStore.swift; sourceTree = "<group>"; };
         000000000000000000003007 /* FastingSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastingSettings.swift; sourceTree = "<group>"; };
+        000000000000000000003008 /* PremiumManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumManager.swift; sourceTree = "<group>"; };
+        000000000000000000003009 /* StreakTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakTracker.swift; sourceTree = "<group>"; };
         000000000000000000004001 /* FastLight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FastLight.app; sourceTree = BUILT_PRODUCTS_DIR; };
         000000000000000000004002 /* FastLightWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FastLightWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
         000000000000000000004003 /* FastLightKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FastLightKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+        000000000000000000001005 /* PremiumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumView.swift; sourceTree = "<group>"; };
+        000000000000000000000006 /* FastLightProducts.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = FastLightProducts.storekit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +95,7 @@
         000000000000000000000010 = {
             isa = PBXGroup;
             children = (
+                000000000000000000000006 /* FastLightProducts.storekit */,
                 000000000000000000000020 /* FastLight */,
                 000000000000000000000030 /* FastLightWidget */,
                 000000000000000000000050 /* FastLightKit */,
@@ -99,6 +108,7 @@
             children = (
                 000000000000000000001001 /* FastLightApp.swift */,
                 000000000000000000001002 /* ContentView.swift */,
+                000000000000000000001005 /* PremiumView.swift */,
                 000000000000000000001003 /* Assets.xcassets */,
                 000000000000000000001004 /* Info.plist */,
             );
@@ -135,6 +145,8 @@
                 000000000000000000003005 /* FastLightEngine.swift */,
                 000000000000000000003006 /* FastingSettingsStore.swift */,
                 000000000000000000003007 /* FastingSettings.swift */,
+                000000000000000000003008 /* PremiumManager.swift */,
+                000000000000000000003009 /* StreakTracker.swift */,
                 000000000000000000003002 /* Info.plist */,
             );
             path = FastLightKit;
@@ -242,6 +254,7 @@
             buildActionMask = 2147483647;
             files = (
                 000000000000000000011003 /* Assets.xcassets in Resources */,
+                000000000000000000011005 /* FastLightProducts.storekit in Resources */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };
@@ -261,6 +274,7 @@
             files = (
                 000000000000000000011001 /* FastLightApp.swift in Sources */,
                 000000000000000000011002 /* ContentView.swift in Sources */,
+                000000000000000000011004 /* PremiumView.swift in Sources */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };
@@ -284,6 +298,8 @@
                 000000000000000000013004 /* FastLightEngine.swift in Sources */,
                 000000000000000000013005 /* FastingSettingsStore.swift in Sources */,
                 000000000000000000013006 /* FastingSettings.swift in Sources */,
+                000000000000000000013007 /* PremiumManager.swift in Sources */,
+                000000000000000000013008 /* StreakTracker.swift in Sources */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };
