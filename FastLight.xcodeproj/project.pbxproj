@@ -22,7 +22,9 @@
         000000000000000000013007 /* PremiumManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000003008 /* PremiumManager.swift */; };
         000000000000000000013008 /* StreakTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000003009 /* StreakTracker.swift */; };
         000000000000000000011004 /* PremiumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000001005 /* PremiumView.swift */; };
+        000000000000000000011006 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000001006 /* PaywallView.swift */; };
         000000000000000000011005 /* FastLightProducts.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000006 /* FastLightProducts.storekit */; };
+        000000000000000000011007 /* StoreKitConfig.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000001008 /* StoreKitConfig.storekit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,8 @@
         000000000000000000004003 /* FastLightKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FastLightKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
         000000000000000000001005 /* PremiumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumView.swift; sourceTree = "<group>"; };
         000000000000000000000006 /* FastLightProducts.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = FastLightProducts.storekit; sourceTree = "<group>"; };
+        000000000000000000001006 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+        000000000000000000001008 /* StoreKitConfig.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoreKitConfig.storekit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +113,9 @@
                 000000000000000000001001 /* FastLightApp.swift */,
                 000000000000000000001002 /* ContentView.swift */,
                 000000000000000000001005 /* PremiumView.swift */,
+                000000000000000000001006 /* PaywallView.swift */,
                 000000000000000000001003 /* Assets.xcassets */,
+                000000000000000000001007 /* Configuration */,
                 000000000000000000001004 /* Info.plist */,
             );
             path = FastLight;
@@ -150,6 +156,14 @@
                 000000000000000000003002 /* Info.plist */,
             );
             path = FastLightKit;
+            sourceTree = "<group>";
+        };
+000000000000000000001007 /* Configuration */ = {
+            isa = PBXGroup;
+            children = (
+                000000000000000000001008 /* StoreKitConfig.storekit */,
+            );
+            path = Configuration;
             sourceTree = "<group>";
         };
 /* End PBXGroup section */
@@ -255,6 +269,7 @@
             files = (
                 000000000000000000011003 /* Assets.xcassets in Resources */,
                 000000000000000000011005 /* FastLightProducts.storekit in Resources */,
+                000000000000000000011007 /* StoreKitConfig.storekit in Resources */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };
@@ -275,6 +290,7 @@
                 000000000000000000011001 /* FastLightApp.swift in Sources */,
                 000000000000000000011002 /* ContentView.swift in Sources */,
                 000000000000000000011004 /* PremiumView.swift in Sources */,
+                000000000000000000011006 /* PaywallView.swift in Sources */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };

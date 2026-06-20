@@ -5,8 +5,8 @@ struct ContentView: View {
     @State private var selectedPreset: FastingSchedule.Preset = .sixteenEight
     @State private var currentTime = Date()
     @State private var isPulsing = false
-    @State private var showPremium = false
-    @State private var isPremium = false
+    @State private var showPaywall = false
+    @StateObject private var premiumManager = PremiumManager.shared
 
     private let store = FastingSettingsStore.shared
 
@@ -24,35 +24,28 @@ struct ContentView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 28) {
-                    // MARK: Brand Header
                     brandHeader
 
-                    // MARK: Hero Status
                     heroStatusCard
                         .padding(.horizontal)
 
-                    // MARK: Schedule Picker
                     scheduleSection
                         .padding(.horizontal)
 
-                    // MARK: Day Timeline
                     dayTimeline
                         .padding(.horizontal)
 
-                    // MARK: Streak (Premium)
                     streakSection
                         .padding(.horizontal)
 
-                    // MARK: Details
                     detailsSection
                         .padding(.horizontal)
 
-                    // MARK: Premium / Restore
-                    if !isPremium {
-                        premiumCTA
+                    if premiumManager.isPremium {
+                        restoreButton
                             .padding(.horizontal)
                     } else {
-                        restoreButton
+                        premiumCTA
                             .padding(.horizontal)
                     }
 
@@ -61,8 +54,8 @@ struct ContentView: View {
                 .padding(.top, 20)
             }
             .background(Color(.systemGroupedBackground))
-            .navigationDestination(isPresented: $showPremium) {
-                PremiumView()
+            .navigationDestination(isPresented: $showPaywall) {
+                PaywallView()
             }
             .onReceive(timer) { time in
                 withAnimation(.easeInOut(duration: 0.3)) {
@@ -73,10 +66,6 @@ struct ContentView: View {
                 selectedPreset = store.selectedPreset
                 withAnimation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true).delay(0.3)) {
                     isPulsing = true
-                }
-                // Check premium status
-                Task {
-                    isPremium = await PremiumManager.shared.isPremium
                 }
             }
             .onChange(of: selectedPreset) { _, newPreset in
@@ -101,14 +90,13 @@ struct ContentView: View {
 
             Spacer()
 
-            // Premium badge
-            if isPremium {
+            if premiumManager.isPremium {
                 Image(systemName: "crown.fill")
                     .font(.system(size: 20))
                     .foregroundStyle(.yellow)
             } else {
                 Button {
-                    showPremium = true
+                    showPaywall = true
                 } label: {
                     HStack(spacing: 4) {
                         Image(systemName: "crown.fill")
@@ -204,11 +192,9 @@ struct ContentView: View {
                 .font(.subheadline)
 
                 Spacer()
-
                 Image(systemName: "arrow.right")
                     .font(.caption)
                     .foregroundStyle(.secondary)
-
                 Spacer()
 
                 Label {
@@ -250,12 +236,9 @@ struct ContentView: View {
                             .frame(height: 28)
 
                         let eatStartX = CGFloat(startHour) * hourWidth
-                        let eatWidth: CGFloat
-                        if endHour > startHour {
-                            eatWidth = CGFloat(endHour - startHour) * hourWidth
-                        } else {
-                            eatWidth = (CGFloat(24 - startHour) + CGFloat(endHour)) * hourWidth
-                        }
+                        let eatWidth: CGFloat = endHour > startHour
+                            ? CGFloat(endHour - startHour) * hourWidth
+                            : (CGFloat(24 - startHour) + CGFloat(endHour)) * hourWidth
 
                         Capsule()
                             .fill(Color.orange.gradient)
@@ -290,24 +273,21 @@ struct ContentView: View {
                 Label("Streak", systemImage: "flame.fill")
                     .font(.headline)
                     .foregroundStyle(.indigo)
-
                 Spacer()
-
-                if !isPremium {
+                if !premiumManager.isPremium {
                     Image(systemName: "lock.fill")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
             }
 
-            if isPremium {
+            if premiumManager.isPremium {
                 let streak = StreakTracker.shared
                 HStack(spacing: 20) {
                     streakStat(value: "\(streak.currentStreak)", label: "Current Streak")
                     streakStat(value: "\(streak.longestStreak)", label: "Longest Streak")
                 }
 
-                // Mini streak calendar
                 let history = streak.recentHistory(days: 14)
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 4), count: 14), spacing: 4) {
                     ForEach(history) { day in
@@ -329,7 +309,7 @@ struct ContentView: View {
                         .multilineTextAlignment(.center)
 
                     Button("Unlock with Premium") {
-                        showPremium = true
+                        showPaywall = true
                     }
                     .buttonStyle(.bordered)
                     .tint(.indigo)
@@ -382,7 +362,7 @@ struct ContentView: View {
 
     private var premiumCTA: some View {
         Button {
-            showPremium = true
+            showPaywall = true
         } label: {
             HStack {
                 Image(systemName: "crown.fill")
@@ -403,9 +383,7 @@ struct ContentView: View {
 
     private var restoreButton: some View {
         Button("Restore Purchases") {
-            Task {
-                await PremiumManager.shared.restorePurchases()
-            }
+            Task { await PremiumManager.shared.restorePurchases() }
         }
         .font(.subheadline)
         .foregroundStyle(.indigo)

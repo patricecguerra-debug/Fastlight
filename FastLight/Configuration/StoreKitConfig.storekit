@@ -1,0 +1,41 @@
+{
+  "identifier" : "db982b35",
+  "nonRenewingSubscriptions" : [
+    {
+      "displayPrice" : "",
+      "familyShareable" : false,
+      "groupNumber" : 1,
+      "internalID" : "1BECBBA5",
+      "productID" : "com.fastlight.premium",
+      "referenceName" : "Premium",
+      "type" : "non-renewing-subscription"
+    }
+  ],
+  "products" : [
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "8F5D2C1A",
+      "localizations" : [
+        {
+          "description" : "Multiple window presets, streak tracking, and widget customization.",
+          "displayName" : "FastLight Premium",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.fastlight.premium",
+      "referenceName" : "Premium",
+      "type" : "non-renewing-subscription"
+    }
+  ],
+  "settings" : {
+    "developerTeamID" : "",
+    "localStore" : "localStore.json",
+    "simulatorApproval" : false,
+    "storeKitVersion" : "2.0"
+  },
+  "version" : {
+    "major" : 2,
+    "minor" : 0
+  }
+}
